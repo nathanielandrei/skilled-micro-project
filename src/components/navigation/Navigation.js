@@ -3,8 +3,8 @@ import { Navbar } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom'
-import { UserStateContext } from '../../provider/UserContextProvider'
-import {REFRESH_STATE} from '../../provider/constants/action.type'
+import { UserStateContext } from '../../context/UserContextProvider'
+import { refreshState } from '../../context/actions/user.actions'
 
 const Navigation = ({title, resetState}) => {
     const { userDispatch } = useContext(UserStateContext)
@@ -12,7 +12,7 @@ const Navigation = ({title, resetState}) => {
 
     const goBackTo = () => {
         if(resetState) {
-            userDispatch({type: REFRESH_STATE})
+            userDispatch(refreshState())
         }
 
         history.goBack()

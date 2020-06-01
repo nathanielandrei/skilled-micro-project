@@ -5,7 +5,7 @@ import {
   Col,
   ListGroup
 } from 'react-bootstrap'
-import { UserStateContext } from '../../provider/UserContextProvider'
+import { UserStateContext } from '../../context/UserContextProvider'
 import { Link, useHistory } from 'react-router-dom'
 import Navigation from '../../components/navigation'
 

@@ -9,9 +9,9 @@ import {
   Button
 } from 'react-bootstrap'
 
-import { UserStateContext } from '../../provider/UserContextProvider'
+import { UserStateContext } from '../../context/UserContextProvider'
 import { getUserRepo } from '../../helpers/app.service'
-import * as type from '../../provider/constants/action.type'
+import * as action from '../../context/actions/user.actions'
 import Loader from '../../components/loader'
 
 const Home = () => {
@@ -35,27 +35,12 @@ const Home = () => {
 
   const handleGo = () => {
     const name = usernameRef.current.value
-    userDispatch({
-      type: type.GET_USER_REPO,
-      payload: {
-        username: name
-      }
-    })
+    userDispatch(action.getRepo(name))
 
     getUserRepo(name).then(result => {
-      userDispatch({
-        type: type.GET_USER_REPO_SUCCESS,
-        payload: {
-          repos: result.data
-        }
-      })
+      userDispatch(action.getRepoSuccess(result.data))
     }).catch((e) => {
-      userDispatch({
-        type: type.GET_USER_REPO_FAILED,
-        payload: {
-          errMsg: e.message
-        }
-      })
+      userDispatch(action.getRepoFailed(e.message))
 
       alert(e.message)
     })

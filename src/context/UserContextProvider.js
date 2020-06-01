@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useReducer, useMemo } from 'react'
 import * as type from './constants/action.type'
 
 const initialState = {
@@ -13,26 +13,26 @@ const reducer = (state, action) => {
     
     switch(action.type) {
         case type.GET_USER_REPO:
-            const { username } = action.payload;
+            //const { username } = action.payload;
             return {
                 ...state,
-                username: username,
+                username: action.payload,
                 isLoading: true
             }
         case type.GET_USER_REPO_SUCCESS:
-            const { repos } = action.payload;
+            //const { repos } = action.payload;
             return {
                 ...state,
-                repos: repos,
+                repos: action.payload,
                 isLoaded: true,
                 isLoading: false,
             }
         case type.GET_USER_REPO_FAILED:
-            const { errMsg } = action.payload;
+            //const { errMsg } = action.payload;
             return {
                 ...state,
                 isLoading: false,
-                errorMsg: errMsg
+                errorMsg: action.payload
             }
         case type.REFRESH_STATE:
             return initialState
@@ -45,8 +45,9 @@ export const UserStateContext = createContext()
 
 export const UserContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState)
+    const value = useMemo(() => ({userState: state, userDispatch: dispatch}), [state])
     return (
-        <UserStateContext.Provider value={{userState: state, userDispatch: dispatch}}>
+        <UserStateContext.Provider value={value}>
             {children}
         </UserStateContext.Provider>
     )

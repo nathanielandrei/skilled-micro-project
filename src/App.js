@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 import history from './helpers/history'
 import './App.css';
-import { UserContextProvider } from './provider/UserContextProvider'
+import { UserContextProvider } from './context/UserContextProvider'
 import Loader from './components/loader'
 
 const Home = lazy(() => import('./pages/home'))
